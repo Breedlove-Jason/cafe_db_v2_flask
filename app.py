@@ -1,4 +1,3 @@
-# from form import CafeForm
 import os
 from form import CafeForm
 from dotenv import load_dotenv
@@ -17,7 +16,9 @@ db = SQLAlchemy(app)
 
 class Cafe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(250), nullable=False)
+    name = db.Column(
+        db.String(250), nullable=False, unique=True
+    )  # Add unique constraint
     location = db.Column(db.String(250), nullable=False)
     open_time = db.Column(db.String(100), nullable=False)
     close_time = db.Column(db.String(100), nullable=False)
@@ -54,3 +55,16 @@ def add_cafe():
         flash("Cafe added successfully!", "success")
         return redirect(url_for("home"))
     return render_template("add.html", form=form)
+
+
+@app.route("/delete/<int:cafe_id>")
+def delete_cafe(cafe_id):
+    cafe_to_delete = Cafe.query.get(cafe_id)
+    db.session.delete(cafe_to_delete)
+    db.session.commit()
+    flash("Cafe deleted successfully!", "success")
+    return redirect(url_for("home"))
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
