@@ -1,8 +1,8 @@
 # from form import CafeForm
 import os
-
+from form import CafeForm
 from dotenv import load_dotenv
-from flask import Flask
+from flask import Flask, render_template, redirect, url_for, flash
 from flask_bootstrap import Bootstrap  # Change to Flask-Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 
@@ -30,10 +30,27 @@ with app.app_context():
     db.create_all()
 
 
+@app.route("/")
+def home():
+    cafes = Cafe.query.all()
+    return render_template("index.html", cafes=cafes)
+
+
 @app.route("/add", methods=["GET", "POST"])
-def add_cafe():  # put application's code here
-    return "Hello World!"
-
-
-if __name__ == "__main__":
-    app.run()
+def add_cafe():
+    form = CafeForm()
+    if form.validate_on_submit():
+        new_cafe = Cafe(
+            name=form.name.data,
+            location=form.location.data,
+            open_time=form.open_time.data,
+            close_time=form.close_time.data,
+            coffee_rating=form.coffee_rating.data,
+            wifi_rating=form.wifi_rating.data,
+            power_rating=form.power_rating.data,
+        )
+        db.session.add(new_cafe)
+        db.session.commit()
+        flash("Cafe added successfully!", "success")
+        return redirect(url_for("home"))
+    return render_template("add.html", form=form)
