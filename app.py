@@ -30,8 +30,8 @@ with app.app_context():
     db.create_all()
 
 
-@app.route("/")
-def hello_world():  # put application's code here
+@app.route("/add", methods=["GET", "POST"])
+def add_cafe():  # put application's code here
     return "Hello World!"
 
 
