@@ -8,7 +8,7 @@ gen
 __pycache__/
 *.py[cod]
 *$py.class
-
+.flaskenv
 # C extensions
 *.so
 

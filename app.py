@@ -2,8 +2,10 @@ import os
 from form import CafeForm
 from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, url_for, flash
+from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap  # Change to Flask-Bootstrap
 from flask_sqlalchemy import SQLAlchemy
+
 
 load_dotenv()
 app = Flask(__name__)
@@ -12,6 +14,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 Bootstrap(app)
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 
 class Cafe(db.Model):
