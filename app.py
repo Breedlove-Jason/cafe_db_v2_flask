@@ -8,6 +8,15 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 load_dotenv()
+
+if os.getenv('FLASK_ENV') == 'development':
+    database_url = os.getenv('LOCAL_DATABASE_URL')
+else:
+    database_url = os.getenv('DATABASE_URL')
+
+# Use `database_url` in your application
+print("Database")
+print(os.getenv("DATABASE_URL"))
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
