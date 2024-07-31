@@ -3,9 +3,8 @@ from form import CafeForm
 from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, url_for, flash
 from flask_migrate import Migrate
-from flask_bootstrap import Bootstrap  # Change to Flask-Bootstrap
+from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-
 
 load_dotenv()
 
@@ -14,9 +13,9 @@ if os.getenv("FLASK_ENV") == "development":
 else:
     database_url = os.getenv("DATABASE_URL")
 
-# Use `database_url` in your application
-print("Database")
-print(os.getenv("DATABASE_URL"))
+if not database_url:
+    raise RuntimeError("DATABASE_URL environment variable not set")
+
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = database_url
@@ -28,9 +27,7 @@ migrate = Migrate(app, db)
 
 class Cafe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(
-        db.String(250), nullable=False, unique=True
-    )  # Add unique constraint
+    name = db.Column(db.String(250), nullable=False, unique=True)
     location = db.Column(db.String(250), nullable=False)
     open_time = db.Column(db.String(100), nullable=False)
     close_time = db.Column(db.String(100), nullable=False)
