@@ -1,5 +1,7 @@
 # BrewDesk
 
+[Open BrewDesk](https://brewdesk.jasonbreedlove.dev/) · [Portfolio](https://www.jasonbreedlove.dev/#projects)
+
 A coffee-and-workspace finder by Jason Breedlove. BrewDesk combines `python_coffee_wifi_flask` and `cafe_db_v2_flask` into one Flask application, keeping the original café collection while replacing the old Bootstrap pages and unsafe public mutation routes.
 
 ## Features
@@ -44,7 +46,7 @@ The namespaced `brewdesk_cafes` table leaves old `cafe` tables untouched. Schema
 
 `data/legacy-cafes.csv` is copied from the original `python_coffee_wifi_flask/static/cafe-data.csv`. `data/catalog.json` is its normalized equivalent, verified by a test. All five rows retain their original names, links, ratings, and hours. They are visibly labeled as legacy samples because their current accuracy has not been verified. The inherited Starbucks and Mare Street Market map links are identical in the source; they are preserved as samples, not presented as independently verified locations.
 
-The original SQLite/CSV project contributed the sample collection and local-use concept; the v2 project contributed the relational café model and external-database direction. Original commits remain in each repository's Git history. This repository is the maintained successor; the earlier project links here.
+The original SQLite/CSV project contributed the sample collection and local-use concept; the v2 project contributed the relational café model and external-database direction. Original commits remain in each repository's Git history. The original SQLite file remains untouched in `python_coffee_wifi_flask`; this release imports the CSV collection and does not claim to migrate that binary database. This repository is the maintained successor; the earlier project links here.
 
 ## Deploy
 
